@@ -6,7 +6,7 @@ Golang开发DB2应用程序
 
 而Golang语言发展的正是如火如荼，所以Telegraf的采集端使用Golang开发。而Golang访问Oracle数据库的驱动目前只有go-oci8
 
-> https://github.com/wendal/go-oci8
+> https://bitbucket.org/phiggins/go-db2-cli
 
 所以最终采集端使用Golang+go-oci8进行开发。
 
