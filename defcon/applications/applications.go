@@ -6,6 +6,7 @@ import (
 	"os"
 	"pdefcon-for-db2/utils/sqlutils"
 	"strconv"
+	"strings"
 )
 
 type DB2Appls struct {
@@ -227,7 +228,7 @@ func (cs *Cursor) GetTotalCounterByClientNname() map[string]int {
 
 func (cs *Cursor) PrintMetrics() {
 	current_hostname, _ := os.Hostname()
-	fmt.Fprintf(os.Stdout, "DB2Applications,host=%s,region=TotalConnections Total=%d\n", current_hostname, cs.GetTotalCounter())
+	fmt.Fprintf(os.Stdout, "DB2Applications,host=%s,region=TotalConnections,connections=all Connections=%d\n", current_hostname, cs.GetTotalCounter())
 	for k, v := range cs.GetTotalCounterByUsername() {
 		fmt.Fprintf(os.Stdout, "DB2Applications,host=%s,region=ConnectionsByUser,username=%s Connections=%d\n", current_hostname, k, v)
 	}
@@ -241,7 +242,7 @@ func (cs *Cursor) PrintMetrics() {
 		fmt.Fprintf(os.Stdout, "DB2Applications,host=%s,region=ConnectionsByDbName,dbname=%s Connections=%d\n", current_hostname, k, v)
 	}
 	for k, v := range cs.GetTotalCounterByClientPlatform() {
-		fmt.Fprintf(os.Stdout, "DB2Applications,host=%s,region=ConnectionsByClientPlatform,platform=%q Connections=%d\n", current_hostname, k, v)
+		fmt.Fprintf(os.Stdout, "DB2Applications,host=%s,region=ConnectionsByClientPlatform,platform=%q Connections=%d\n", current_hostname, strings.Replace(k, " ", "_", -1), v)
 	}
 	for k, v := range cs.GetTotalCounterByClientProtocol() {
 
