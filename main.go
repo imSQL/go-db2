@@ -53,7 +53,6 @@ func getDSN() string {
 func main() {
 
 	connStr = getDSN()
-	fmt.Println(connStr)
 	db, err := sql.Open("db2-cli", connStr)
 	if err != nil {
 		fmt.Println("1->%s", err)
