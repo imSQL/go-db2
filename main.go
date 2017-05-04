@@ -35,7 +35,14 @@ func getDSN() string {
 	if len(os.Args) > 1 {
 		return dsn
 	}
-	dsn = os.Getenv("DB2DBI")
+	dbname := os.Getenv("DB2NAME")
+	db2host := os.Getenv("DB2HOST")
+	db2port := os.Getenv("DB2PORT")
+	db2proc := os.Getenv("DB2PROC")
+	db2uid := os.Getenv("DB2UID")
+	db2pwd := os.Getenv("DB2PWD")
+
+	dsn = fmt.Sprintf("DATABASE=%s; HOSTNAME=%s; PORT=%s; PROTOCOL=%s; UID=%s; PWD=%s;", dbname, db2host, db2port, db2proc, db2uid, db2pwd)
 	if dsn != "" {
 		return dsn
 	}
@@ -46,9 +53,11 @@ func getDSN() string {
 func main() {
 
 	connStr = getDSN()
+	fmt.Println(connStr)
 	db, err := sql.Open("db2-cli", connStr)
 	if err != nil {
-		return
+		fmt.Println("1->%s", err)
+		os.Exit(1)
 	}
 	defer db.Close()
 

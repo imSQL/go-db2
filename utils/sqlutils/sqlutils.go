@@ -7,19 +7,20 @@ import (
 	"os"
 )
 
-type Result map[int]map[string]string
+type Result map[int]map[int]string
 
 func (res *Result) GetMetric(db *sql.DB, query_text string) {
 
 	rows, err := db.Query(query_text)
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 
 	defer rows.Close()
 
-	cols, _ := rows.Columns()
+	cols, err := rows.Columns()
+	if err != nil {
+	}
 
 	values := make([][]byte, len(cols))
 	scans := make([]interface{}, len(cols))
@@ -37,15 +38,14 @@ func (res *Result) GetMetric(db *sql.DB, query_text string) {
 			os.Exit(1)
 		}
 
-		row := make(map[string]string)
+		row := make(map[int]string)
 
 		for k, v := range values {
-			key := cols[k]
-			row[key] = string(v)
+			row[k] = string(v)
 		}
-
 		result[i] = row
 		i++
+
 	}
 	*res = result
 
