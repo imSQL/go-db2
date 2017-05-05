@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 	"pdefcon-for-db2/defcon/applications"
-	//"pdefcon-for-db2/utils/sqlutils"
+	"pdefcon-for-db2/defcon/bufferpool"
 	//	"time"
 )
 
@@ -64,5 +64,10 @@ func main() {
 	res1.DbHandler = db
 	res1.GetMetrics()
 	res1.PrintMetrics()
+
+	res2 := new(bufferpool.Cursor)
+	res2.DbHandler = db
+	res2.GetMetrics()
+	res2.PrintMetrics()
 
 }
