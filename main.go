@@ -8,6 +8,8 @@ import (
 	"os"
 	"pdefcon-for-db2/defcon/applications"
 	"pdefcon-for-db2/defcon/bufferpool"
+	"pdefcon-for-db2/defcon/database"
+	"pdefcon-for-db2/defcon/sqlstat"
 	//	"time"
 )
 
@@ -69,5 +71,15 @@ func main() {
 	res2.DbHandler = db
 	res2.GetMetrics()
 	res2.PrintMetrics()
+
+	res3 := new(database.Cursor)
+	res3.DbHandler = db
+	res3.GetMetrics()
+	res3.PrintMetrics()
+
+	res4 := new(sqlstat.Cursor)
+	res4.DbHandler = db
+	res4.GetMetrics()
+	res4.PrintMetrics()
 
 }
